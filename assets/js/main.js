@@ -3,28 +3,30 @@
   const menuButton = document.querySelector('.menu-toggle');
   const mobileMenu = document.querySelector('.mobile-nav');
   const themeButton = document.querySelector('.theme-toggle');
-  const themeMenu = document.querySelector('.theme-menu');
   const backToTop = document.querySelector('.back-to-top');
 
   const closeMenus = () => {
     if (mobileMenu) mobileMenu.hidden = true;
     if (menuButton) menuButton.setAttribute('aria-expanded', 'false');
-    if (themeMenu) themeMenu.hidden = true;
   };
   menuButton?.addEventListener('click', () => {
     const open = mobileMenu.hidden;
     closeMenus(); mobileMenu.hidden = !open; menuButton.setAttribute('aria-expanded', String(open));
   });
-  themeButton?.addEventListener('click', () => { const open = themeMenu.hidden; closeMenus(); themeMenu.hidden = !open; });
-  document.querySelectorAll('[data-theme-choice]').forEach((button) => button.addEventListener('click', () => {
-    const preference = button.dataset.themeChoice;
-    localStorage.setItem('theme-preference', preference);
-    document.documentElement.dataset.theme = preference;
-    document.documentElement.dataset.resolvedTheme = preference === 'system'
-      ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : preference;
-    document.querySelectorAll('[data-theme-choice]').forEach((choice) => choice.setAttribute('aria-checked', String(choice === button)));
-    closeMenus(); themeButton?.focus();
-  }));
+  const setTheme = (theme) => {
+    localStorage.setItem('theme-preference', theme);
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.resolvedTheme = theme;
+    if (themeButton) {
+      const isDark = theme === 'dark';
+      themeButton.textContent = isDark ? 'Light' : 'Dark';
+      themeButton.setAttribute('aria-label', isDark ? '라이트 모드로 전환' : '다크 모드로 전환');
+      themeButton.setAttribute('aria-pressed', String(isDark));
+    }
+    document.querySelector('iframe.giscus-frame')?.contentWindow?.postMessage({ giscus: { setConfig: { theme } } }, 'https://giscus.app');
+  };
+  setTheme(document.documentElement.dataset.resolvedTheme === 'dark' ? 'dark' : 'light');
+  themeButton?.addEventListener('click', () => setTheme(document.documentElement.dataset.resolvedTheme === 'dark' ? 'light' : 'dark'));
   document.addEventListener('click', (event) => { if (!event.target.closest('.site-header')) closeMenus(); });
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenus(); });
   window.addEventListener('scroll', () => { backToTop.hidden = window.scrollY < 480; }, { passive: true });

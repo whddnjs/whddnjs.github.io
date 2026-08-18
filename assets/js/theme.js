@@ -1,9 +1,8 @@
 (function () {
   const key = 'theme-preference';
-  const preference = localStorage.getItem(key) || 'system';
-  const resolved = preference === 'system'
-    ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-    : preference;
+  const stored = localStorage.getItem(key);
+  const preference = stored === 'dark' ? 'dark' : 'light';
+  localStorage.setItem(key, preference);
   document.documentElement.dataset.theme = preference;
-  document.documentElement.dataset.resolvedTheme = resolved;
+  document.documentElement.dataset.resolvedTheme = preference;
 })();

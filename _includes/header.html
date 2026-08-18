@@ -9,7 +9,7 @@
     </nav>
     <div class="header-actions">
       <button class="icon-button search-trigger" type="button" aria-label="검색 열기" aria-haspopup="dialog">Search</button>
-      <button class="icon-button theme-toggle" type="button" aria-label="테마 변경" aria-haspopup="menu">Theme</button>
+      <button class="icon-button theme-toggle" type="button" aria-label="다크 모드로 전환" aria-pressed="false">Dark</button>
       <button class="icon-button menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-menu">☰</button>
     </div>
   </div>
@@ -19,9 +19,4 @@
     <a href="{{ '/archive/' | relative_url }}">Archive</a>
     <a href="{{ '/about/' | relative_url }}">About</a>
   </nav>
-  <div class="theme-menu" role="menu" hidden>
-    <button type="button" role="menuitemradio" aria-checked="false" data-theme-choice="light">Light</button>
-    <button type="button" role="menuitemradio" aria-checked="false" data-theme-choice="dark">Dark</button>
-    <button type="button" role="menuitemradio" aria-checked="true" data-theme-choice="system">System</button>
-  </div>
 </header>
