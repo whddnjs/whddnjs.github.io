@@ -1,0 +1,56 @@
+title: "Blog"
+description: "Development, notes and things worth remembering."
+url: ""
+baseurl: ""
+repository: ""
+timezone: Asia/Seoul
+lang: ko
+permalink: /posts/:year/:month/:day/:title/
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - scripts
+  - _templates
+  - DESIGN.md
+  - IMPLEMENTATION_NOTES.md
+
+sass:
+  style: compressed
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      toc: true
+      comments: true
+
+giscus:
+  repo: ""
+  repo_id: ""
+  category: "General"
+  category_id: ""
+  mapping: "pathname"
+  strict: "0"
+  reactions_enabled: "1"
+  emit_metadata: "0"
+  input_position: "bottom"
+  lang: "ko"
+  loading: "lazy"

@@ -1,0 +1,67 @@
+---
+layout: default
+---
+{% assign words = content | strip_html | number_of_words %}
+{% assign reading_time = words | divided_by: 220 | plus: 1 %}
+<div class="reading-progress" aria-hidden="true"><span></span></div>
+<main class="post-shell" id="main-content">
+  <article class="post-content">
+    <header class="post-header">
+      <h1>{{ page.title }}</h1>
+      {% include post-meta.html reading_time=reading_time %}
+    </header>
+    {% if page.toc != false %}
+      <div class="toc-mobile">
+        {% include toc.html content=content %}
+      </div>
+    {% endif %}
+    <div class="post-body">
+      {{ content }}
+    </div>
+    {% if page.tags and page.tags.size > 0 %}
+      <section class="post-tags" aria-label="태그">
+        <h2>Tags</h2>
+        <ul class="tag-list">
+          {% for tag in page.tags %}
+            <li><a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+    <div class="post-actions">
+      <button class="copy-link" type="button">Copy link</button>
+      {% if site.repository == '' or site.repository contains '<username>' %}
+        <span class="disabled-link" title="Set site.repository in _config.yml to enable this link">View on GitHub ↗</span>
+      {% else %}
+        <a href="https://github.com/{{ site.repository }}/blob/main/{{ page.path }}" target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>
+      {% endif %}
+    </div>
+    {% include post-navigation.html %}
+    {% if page.comments != false %}{% include giscus.html %}{% endif %}
+  </article>
+  {% if page.toc != false %}
+    <aside class="toc-desktop" aria-label="목차">
+      {% include toc.html content=content %}
+    </aside>
+  {% endif %}
+</main>
+<script src="{{ '/assets/js/toc.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/code.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/reading-progress.js' | relative_url }}" defer></script>
+{% if content contains 'language-mermaid' %}
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: false, theme: document.documentElement.dataset.resolvedTheme === 'dark' ? 'dark' : 'default' });
+    document.querySelectorAll('.language-mermaid .highlight, pre code.language-mermaid').forEach((node) => {
+      const source = node.textContent.trim();
+      const target = document.createElement('div'); target.className = 'mermaid'; target.textContent = source;
+      node.closest('.highlighter-rouge, pre').replaceWith(target);
+    });
+    await mermaid.run({ querySelector: '.mermaid' });
+  </script>
+{% endif %}
+{% if content contains '$' %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous" onload="renderMathInElement(document.querySelector('.post-body'), {delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false},{left:'$',right:'$',display:false}]});"></script>
+{% endif %}

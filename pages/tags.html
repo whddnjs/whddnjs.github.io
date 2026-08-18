@@ -1,0 +1,21 @@
+---
+layout: archive
+title: Tags
+permalink: /tags/
+---
+
+# Tags
+
+<ul class="tag-index">
+  {% assign sorted_tags = site.tags | sort %}
+  {% for tag in sorted_tags %}
+    <li><a href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a></li>
+  {% endfor %}
+</ul>
+{% for tag in sorted_tags %}
+  <section class="tag-section" id="{{ tag[0] | slugify }}">
+    <h2>{{ tag[0] }}</h2>
+    {% assign tag_posts = tag[1] | sort: 'date' | reverse %}
+    {% include post-list.html posts=tag_posts %}
+  </section>
+{% endfor %}

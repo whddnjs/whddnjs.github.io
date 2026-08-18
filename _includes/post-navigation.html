@@ -1,0 +1,18 @@
+{% assign previous_post = page.previous %}
+{% assign next_post = page.next %}
+{% if page.series %}
+  {% assign series_posts = site.posts | where_exp: 'item', 'item.series.name == page.series.name' | sort: 'series.order' %}
+  {% for series_post in series_posts %}
+    {% if series_post.url == page.url %}
+      {% assign current_index = forloop.index0 %}
+      {% assign prior_index = current_index | minus: 1 %}
+      {% assign following_index = current_index | plus: 1 %}
+      {% if current_index > 0 %}{% assign previous_post = series_posts[prior_index] %}{% endif %}
+      {% if following_index < series_posts.size %}{% assign next_post = series_posts[following_index] %}{% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+<nav class="post-navigation" aria-label="게시글 탐색">
+  <div>{% if previous_post %}<span>← Previous</span><a href="{{ previous_post.url | relative_url }}">{{ previous_post.title }}</a>{% endif %}</div>
+  <div>{% if next_post %}<span>Next →</span><a href="{{ next_post.url | relative_url }}">{{ next_post.title }}</a>{% endif %}</div>
+</nav>

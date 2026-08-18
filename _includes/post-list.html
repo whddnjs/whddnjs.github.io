@@ -1,0 +1,13 @@
+<ul class="post-list">
+  {% for post in include.posts %}
+    {% assign post_words = post.content | strip_html | number_of_words %}
+    {% assign post_reading_time = post_words | divided_by: 220 | plus: 1 %}
+    <li>
+      <article>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p class="post-list-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %-d' }}</time> · {{ post_reading_time }} min read</p>
+        <p>{{ post.description }}</p>
+      </article>
+    </li>
+  {% endfor %}
+</ul>

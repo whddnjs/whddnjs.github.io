@@ -1,0 +1,7 @@
+{% comment %}
+Usage: capture code, then include code-block.html language="javascript" filename="app.js" code=code.
+For highlighted/numbered blocks use Jekyll: {% highlight javascript linenos mark_lines="2,4-5" %}...{% endhighlight %}.
+{% endcomment %}
+<div class="code-block"{% if include.filename %} data-filename="{{ include.filename }}"{% endif %}>
+  <pre><code class="language-{{ include.language | default: 'text' }}">{{ include.code | escape }}</code></pre>
+</div>

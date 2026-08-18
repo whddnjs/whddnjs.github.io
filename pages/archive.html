@@ -1,0 +1,29 @@
+---
+layout: archive
+title: Archive
+permalink: /archive/
+---
+
+# Archive
+
+{% assign posts_by_year = site.posts | group_by_exp: 'post', 'post.date | date: "%Y"' %}
+<div class="archive-list" data-infinite-list data-page-size="20">
+  {% for year in posts_by_year %}
+    <section class="archive-year">
+      <h2>{{ year.name }}</h2>
+      {% assign posts_by_month = year.items | group_by_exp: 'post', 'post.date | date: "%B"' %}
+      {% for month in posts_by_month %}
+        <div class="archive-month">
+          <h3>{{ month.name }}</h3>
+          <ul>
+            {% for post in month.items %}
+              <li data-infinite-item><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %-d' }}</time> <a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </section>
+  {% endfor %}
+</div>
+<div class="infinite-sentinel" aria-hidden="true"></div>
+<script src="{{ '/assets/js/infinite-scroll.js' | relative_url }}" defer></script>

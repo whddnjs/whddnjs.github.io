@@ -1,0 +1,5 @@
+{% assign type = include.type | default: 'note' | downcase %}
+<aside class="callout callout-{{ type }}" role="note">
+  <strong>{{ type | capitalize }}</strong>
+  <div>{{ include.content | markdownify }}</div>
+</aside>

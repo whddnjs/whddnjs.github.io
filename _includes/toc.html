@@ -1,0 +1,14 @@
+{% assign headings = include.content | split: '<h2' %}
+{% if headings.size > 1 %}
+  <details class="toc" open>
+    <summary>Contents</summary>
+    <ol>
+      {% for part in headings offset: 1 %}
+        {% assign level = 2 %}
+        {% assign id = part | split: 'id="' | last | split: '"' | first %}
+        {% assign text = part | split: '>' | slice: 1, 1 | first | split: '</h2' | first | strip_html %}
+        {% if id != blank and text != blank %}<li><a href="#{{ id }}">{{ text }}</a></li>{% endif %}
+      {% endfor %}
+    </ol>
+  </details>
+{% endif %}
