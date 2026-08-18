@@ -1,8 +1,8 @@
-title: "Blog"
-description: "Development, notes and things worth remembering."
-url: ""
-baseurl: ""
-repository: ""
+title: '종원'
+description: 'ㅎㅇㅎㅇ'
+url: 'https://whddnjs.github.io'
+baseurl: ''
+repository: 'whddnjs/whddnjs.github.io'
 timezone: Asia/Seoul
 lang: ko
 permalink: /posts/:year/:month/:day/:title/
@@ -35,7 +35,7 @@ sass:
 
 defaults:
   - scope:
-      path: ""
+      path: ''
       type: posts
     values:
       layout: post
@@ -43,14 +43,14 @@ defaults:
       comments: true
 
 giscus:
-  repo: ""
-  repo_id: ""
-  category: "General"
-  category_id: ""
-  mapping: "pathname"
-  strict: "0"
-  reactions_enabled: "1"
-  emit_metadata: "0"
-  input_position: "bottom"
-  lang: "ko"
-  loading: "lazy"
+  repo: ''
+  repo_id: ''
+  category: 'General'
+  category_id: ''
+  mapping: 'pathname'
+  strict: '0'
+  reactions_enabled: '1'
+  emit_metadata: '0'
+  input_position: 'bottom'
+  lang: 'ko'
+  loading: 'lazy'
